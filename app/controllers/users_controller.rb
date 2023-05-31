@@ -8,8 +8,13 @@ class UsersController < ApplicationController
     @user["first_name"] = params["user"]["first_name"]
     @user["last_name"] = params["user"]["last_name"]
     @user["email"] = params["user"]["email"]
-    @user["password"] = params["user"]["password"]
-    @user.save
-    redirect_to "/posts"
+    @user["password"] = BCrypt::Password.create(params["user"]["password"])
+    if User.find_by({"email" => params["user"]["email"]}) != nil
+      flash["notice"] = "Please use existing log-in."
+      redirect_to "/sessions/new"
+    else
+      @user.save
+      redirect_to "/posts"
+    end 
   end
 end
