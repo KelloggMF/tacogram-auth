@@ -1,5 +1,6 @@
 <h1>New Post</h1>
 
+<% if @current_user != nil %>
 <%= form_with :model => @post do |form| %>
   <p>
     <%= form.label "body" %>
@@ -13,3 +14,8 @@
 
   <p><%= form.submit %></p>
 <% end %>
+<% else %>
+    <p>
+      Please log in to post!
+    </p>
+  <% end %>

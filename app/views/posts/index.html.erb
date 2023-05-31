@@ -2,10 +2,17 @@
   <% for post in @posts %>
     <div class="col-3">
       <h4>
-        <!-- TODO: display the name of the user that created the post -->
+        <% @poster = User.find_by({"id" => post["user_id"]})%>
+        <% if @poster != nil %>
+        <%= @poster.first_name%>
+        <% else %>
+        Author unknown
+        <% end %>
       </h4>
       <img class="img-fluid" src="<%= post["image"] %>" class="w-full">
-      <p><%= post["body"] %></p>
+      <p>
+      <%= post["body"] %>
+      </p>
     </div>
   <% end %>
 </div>
